@@ -23,6 +23,9 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  postal: {
+    type: DataTypes.STRING,
+  },
   neighbourhood: {
     type: DataTypes.STRING,
   },

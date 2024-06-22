@@ -89,13 +89,14 @@ const Register = () => {
                 <label className="block text-sm font-medium text-gray-700">Postal Code</label>
                 <input
                   {...field}
+                  type="text"
                   placeholder="542090"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
                 {errors.postal && <p className="text-red-600 text-sm mt-1">{errors.postal.message}</p>}
               </div>
             )}
-            rules={{ required: 'Postal is required' }}
+            rules={{ required: 'Postal code is required', pattern: { value: /^[0-9]{6}$/, message: 'Postal code must be 6 digits' } }}
           />
 
           <button

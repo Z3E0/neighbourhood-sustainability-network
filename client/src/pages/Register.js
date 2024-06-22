@@ -1,22 +1,14 @@
 // client/src/pages/Register.js
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
+import { useForm, Controller } from 'react-hook-form';
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const { control, handleSubmit, formState: { errors } } = useForm();
 
-  const { username, email, password } = formData;
-
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
-      const res = await axios.post('/api/auth/register', formData);
+      const res = await axios.post('http://localhost:3000/api/auth/register', data);
       console.log(res.data);
     } catch (error) {
       console.error(error);
@@ -24,12 +16,75 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" name="username" value={username} onChange={onChange} placeholder="Username" required />
-      <input type="email" name="email" value={email} onChange={onChange} placeholder="Email" required />
-      <input type="password" name="password" value={password} onChange={onChange} placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <Controller
+            name="username"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Username</label>
+                <input
+                  {...field}
+                  placeholder="Username"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                {errors.username && <p className="text-red-600 text-sm mt-1">{errors.username.message}</p>}
+              </div>
+            )}
+            rules={{ required: 'Username is required' }}
+          />
+
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input
+                  {...field}
+                  type="email"
+                  placeholder="Email"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
+              </div>
+            )}
+            rules={{ required: 'Email is required' }}
+          />
+
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <input
+                  {...field}
+                  type="password"
+                  placeholder="Password"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>}
+              </div>
+            )}
+            rules={{ required: 'Password is required' }}
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

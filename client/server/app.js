@@ -40,8 +40,8 @@ app.get('/api/users/:id', (req, res) => {
 app.post('/api/auth/register', (req, res) => {
   const { username, email, password } = req.body;
 
-  const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-  connection.query(query, [username, email, password], (err, results) => {
+  const query = 'INSERT INTO users (username, email, password, postal) VALUES (?, ?, ?, ?)';
+  connection.query(query, [username, email, password, postal], (err, results) => {
     if (err) {
       console.error('Error inserting user:', err);
       res.status(500).send('Server error');

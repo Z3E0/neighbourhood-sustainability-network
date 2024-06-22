@@ -80,6 +80,24 @@ const Register = () => {
             rules={{ required: 'Password is required' }}
           />
 
+          <Controller
+            name="postal"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Postal Code</label>
+                <input
+                  {...field}
+                  placeholder="542090"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                {errors.postal && <p className="text-red-600 text-sm mt-1">{errors.postal.message}</p>}
+              </div>
+            )}
+            rules={{ required: 'Postal is required' }}
+          />
+
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -87,6 +105,9 @@ const Register = () => {
             Register
           </button>
         </form>
+        <div className="space-x-4">
+          <a href="/login" className="text-indigo-600 hover:underline">Login</a>
+        </div>
       </div>
     </div>
   );

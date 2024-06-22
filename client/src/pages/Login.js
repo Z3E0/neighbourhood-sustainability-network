@@ -70,6 +70,9 @@ const Login = () => {
             Login
           </button>
         </form>
+        <div className="space-x-4">
+          <a href="/register" className="text-indigo-600 hover:underline">Register</a>
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Neighbourhood from './pages/Neighbourhood';
 import Index from './pages/Index';
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (

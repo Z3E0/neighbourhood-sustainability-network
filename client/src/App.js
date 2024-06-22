@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Neighbourhood from './pages/Neighbourhood';
+import Index from './pages/Index';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/neighbourhood" element={<Neighbourhood />} />
+        <Route path="/index" element={<Index />} />
       </Routes>
     </Router>
   );

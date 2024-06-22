@@ -1,19 +1,24 @@
+// client/src/pages/Login.js
 import React from 'react';
 import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     console.log('Submitting login data:', data); // Log the data being submitted
     try {
       const res = await axios.post('http://localhost:3000/api/auth/login', data);
       console.log('Login response:', res.data);
+      // Navigate to the new page after successful login
+      navigate('/index'); // Example new page
     } catch (error) {
       console.error('Login error:', error.response ? error.response.data : error.message);
     }
-  };  
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

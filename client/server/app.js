@@ -1,8 +1,8 @@
 // server/app.js
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const connection = require('./config/database');
-const cors = require('cors');
 
 const app = express();
 
@@ -50,6 +50,28 @@ app.post('/api/auth/register', (req, res) => {
     res.status(201).send('User registered successfully');
   });
 });
+
+// Login endpoint
+app.post('/api/auth/login', (req, res) => {
+  console.log('Received login request:', req.body); // Log the received request body
+  const { email, password } = req.body;
+  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+  connection.query(query, [email, password], (err, results) => {
+    if (err) {
+      console.error('Error logging in user:', err);
+      res.status(500).send('Server error');
+      return;
+    }
+    console.log('Query results:', results); // Log the query results
+    if (results.length > 0) {
+      res.status(200).send('User logged in successfully');
+    } else {
+      res.status(401).send('Invalid credentials');
+    }
+  });
+});
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -17,6 +17,9 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.1",
-    "sequelize": "^6.37.3"
+    "react-calendar": "^5.0.0",
+    "react-tooltip": "^5.27.0",
+    "sequelize": "^6.37.3",
+    "socket.io": "^4.7.5"
   }
 }

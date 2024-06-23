@@ -1,9 +1,7 @@
-// client/src/pages/Register.js
 import React from 'react';
 import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
 
 const Register = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
@@ -13,7 +11,11 @@ const Register = () => {
     try {
       const res = await axios.post('http://localhost:3000/api/auth/register', data);
       console.log(res.data);
-      navigate('/index')
+      const group = encodeURIComponent(res.data.group);
+      localStorage.setItem('userGroup', group);
+      localStorage.setItem('userId', res.data.user_id);
+      localStorage.setItem('username', data.username);
+      navigate(`/group-chat/${group}`);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +98,10 @@ const Register = () => {
                 {errors.postal && <p className="text-red-600 text-sm mt-1">{errors.postal.message}</p>}
               </div>
             )}
-            rules={{ required: 'Postal code is required', pattern: { value: /^[0-9]{6}$/, message: 'Postal code must be 6 digits' } }}
+            rules={{
+              required: 'Postal code is required',
+              pattern: { value: /^[0-9]{6}$/, message: 'Postal code must be 6 digits' }
+            }}
           />
 
           <button
@@ -106,7 +111,7 @@ const Register = () => {
             Register
           </button>
         </form>
-        <div className="space-x-4">
+        <div className="mt-4 text-center">
           <a href="/login" className="text-indigo-600 hover:underline">Login</a>
         </div>
       </div>

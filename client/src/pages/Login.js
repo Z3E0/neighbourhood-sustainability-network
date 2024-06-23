@@ -1,4 +1,3 @@
-// client/src/pages/Login.js
 import React from 'react';
 import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
@@ -9,14 +8,16 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log('Submitting login data:', data); // Log the data being submitted
     try {
       const res = await axios.post('http://localhost:3000/api/auth/login', data);
-      console.log('Login response:', res.data);
-      // Navigate to the new page after successful login
-      navigate('/index'); // Example new page
+      console.log(res.data);
+      const group = encodeURIComponent(res.data.group);
+      localStorage.setItem('userGroup', group);
+      localStorage.setItem('userId', res.data.user_id);
+      localStorage.setItem('username', data.email.split('@')[0]); // Assuming the username is the part before @ in email
+      navigate(`/group-chat/${group}`);
     } catch (error) {
-      console.error('Login error:', error.response ? error.response.data : error.message);
+      console.error(error);
     }
   };
 
@@ -70,7 +71,7 @@ const Login = () => {
             Login
           </button>
         </form>
-        <div className="space-x-4">
+        <div className="mt-4 text-center">
           <a href="/register" className="text-indigo-600 hover:underline">Register</a>
         </div>
       </div>
